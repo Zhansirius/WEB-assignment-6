@@ -46,7 +46,7 @@
         
         <!-- Profile Icon -->
         <div class="d-none d-lg-flex nav-icon">
-            <img src="assets/icon.png" alt="Game Icon">
+            <img data-src="assets/icon.png" alt="Game Icon">
         </div>
     </div>
 </nav>
@@ -75,22 +75,48 @@
         </ol>
     </div>
     <div class="features-image">
-        <img src="assets/giant.jpg" alt="Features">
+        <img data-src="assets/giant.jpg" alt="Features">
     </div>
 </div>
+
+<!-- asik 6 | Tasks 1, 2, 3: Search System -->
+<section class="search-section">
+
+    <h2>SEARCH THE ZONE</h2>
+
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="zoneSearch"
+            placeholder="Search for StalCalc, Map, Donate..."
+            autocomplete="off"
+        >
+
+        <div id="searchSuggestions"></div>
+
+    </div>
+
+    <p id="searchResults">Showing all items</p>
+
+    <p id="noResults" style="display: none;">
+        No items found in the Zone.
+    </p>
+
+</section>
 
     <section class="cards-section">
     <h2>Featured Features / Items</h2>
     <div class="cards-container">
     <div class="card">
-        <img src="assets/stalcalc.jpg" alt="Card Image 1">
+        <img data-src="assets/stalcalc.jpg" alt="Card Image 1">
         <h3>StalCalc</h3>
         <p>Balance your build and discover rare artifacts with custom parameters.</p>
         <a href="StalCalc.html" class="btn btn-outline-danger card-btn">Explore</a>
     </div>
 
     <div class="card">
-        <img src="assets/map.png" alt="Card Image 2">
+        <img data-src="assets/map.png" alt="Card Image 2">
         <h3>Interactive Map</h3>
         <p>Explore the North Zone, track vital locations, and plan your routes safely.</p>
         <div class="btn-group w-100" role="group">
@@ -100,7 +126,7 @@
     </div>
 
     <div class="card">
-        <img src="assets/rich.jpg" alt="Card Image 3">
+        <img data-src="assets/rich.jpg" alt="Card Image 3">
         <h3>Donate</h3>
         <p>Support your faction, get Stalcoins, and become the strongest player.</p>
         <a href="Donate.html" class="btn btn-danger btn-lg card-btn">Donate Now</a>
@@ -114,7 +140,7 @@
     <div class="row g-4 justify-content-center">
         <div class="col-md-4 d-flex justify-content-center">
             <div class="card h-100" style="width: 320px; background-color: #111111; border: 1px solid #333333;">
-                <img src="assets/stalcalc.jpg" class="card-img-top" alt="Card Image 1" style="height: 180px; object-fit: cover;">
+                <img data-src="assets/stalcalc.jpg" class="card-img-top" alt="Card Image 1" style="height: 180px; object-fit: cover;">
                 <div class="card-body d-flex flex-column text-start">
                     <h3 class="card-title text-white fs-5">StalCalc</h3>
                     <p class="card-text text-secondary flex-grow-1">Balance your build and discover rare artifacts with custom parameters.</p>
@@ -125,7 +151,7 @@
 
         <div class="col-md-4 d-flex justify-content-center">
             <div class="card h-100" style="width: 320px; background-color: #111111; border: 1px solid #333333;">
-                <img src="assets/map.png" class="card-img-top" alt="Card Image 2" style="height: 180px; object-fit: cover;">
+                <img data-src="assets/map.png" class="card-img-top" alt="Card Image 2" style="height: 180px; object-fit: cover;">
                 <div class="card-body d-flex flex-column text-start">
                     <h3 class="card-title text-white fs-5">Interactive Map</h3>
                     <p class="card-text text-secondary flex-grow-1">Explore the North Zone, track vital locations, and plan your routes safely.</p>
@@ -139,7 +165,7 @@
 
         <div class="col-md-4 d-flex justify-content-center">
             <div class="card h-100" style="width: 320px; background-color: #111111; border: 1px solid #333333;">
-                <img src="assets/rich.jpg" class="card-img-top" alt="Card Image 3" style="height: 180px; object-fit: cover;">
+                <img data-src="assets/rich.jpg" class="card-img-top" alt="Card Image 3" style="height: 180px; object-fit: cover;">
                 <div class="card-body d-flex flex-column text-start">
                     <h3 class="card-title text-white fs-5">Donate</h3>
                     <p class="card-text text-secondary flex-grow-1">Support your faction, get Stalcoins, and become the strongest player.</p>

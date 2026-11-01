@@ -834,3 +834,87 @@ th a {
 #changeBackgroundBtn {
     margin-top: 10px;
 }
+
+/* Tasks 1, 2, 3: Search System */
+
+.search-section {
+    max-width: 700px;
+    margin: 50px auto 30px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.search-section h2 {
+    color: #cc0000;
+    font-family: 'Oswald', sans-serif;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+#zoneSearch {
+    width: 100%;
+    padding: 15px;
+    background-color: #111;
+    color: white;
+    border: 2px solid #cc0000;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+#zoneSearch:focus {
+    border-color: #ff3333;
+    box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+}
+
+#searchSuggestions {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #171717;
+    border: 1px solid #cc0000;
+    border-radius: 0 0 6px 6px;
+    z-index: 100;
+    text-align: left;
+}
+
+.search-suggestion {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: white;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.search-suggestion:hover {
+    background-color: #cc0000;
+}
+
+#searchResults {
+    margin-top: 15px;
+    color: #aaa;
+}
+
+#noResults {
+    color: #ff3333;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.search-highlight {
+    background-color: #cc0000;
+    color: white;
+    padding: 2px 3px;
+    border-radius: 3px;
+}

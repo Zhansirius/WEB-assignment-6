@@ -359,4 +359,303 @@ $(document).ready(function() {
             console.error('Ошибка копирования: ', err);
         });
     });
+
+
+    // asik6 | Task 1: Real-time Search and Live Filter
+
+    let searchInput = $('#zoneSearch');
+    let cards = $('.cards-section .card');
+
+    searchInput.on('keyup', function() {
+
+        let searchText = $(this).val().toLowerCase();
+        let visibleCards = 0;
+
+        cards.filter(function() {
+
+            let cardText = $(this).text().toLowerCase();
+
+            let match = cardText.includes(searchText);
+
+            let cardColumn = $(this).closest('.col-md-4');
+
+            if (cardColumn.length > 0) {
+                cardColumn.toggle(match);
+            } else {
+                $(this).toggle(match);
+            }
+
+            if (match) {
+                visibleCards++;
+            }
+
+            return match;
+        });
+
+        $('#searchResults').text(
+            'Found items: ' + visibleCards
+        );
+
+        if (visibleCards === 0) {
+            $('#noResults').show();
+        } else {
+            $('#noResults').hide();
+        }
+
+        
+        showSuggestions(searchText);
+
+        
+        highlightSearch(searchText);
+
+    });
+
+
+    // asik6 | Task 2: Autocomplete Search Suggestions
+
+    let suggestions = [];
+
+    cards.each(function() {
+
+        let title = $(this).find('h3').first().text().trim();
+
+        if (title !== '' && !suggestions.includes(title)) {
+            suggestions.push(title);
+        }
+
+    });
+
+    $('.faq-question').each(function() {
+
+        let question = $(this).clone()
+            .children()
+            .remove()
+            .end()
+            .text()
+            .trim();
+
+        if (question !== '' && !suggestions.includes(question)) {
+            suggestions.push(question);
+        }
+
+    });
+
+
+    function showSuggestions(searchText) {
+
+        let suggestionBox = $('#searchSuggestions');
+
+        suggestionBox.empty();
+
+        if (searchText === '') {
+            suggestionBox.hide();
+            return;
+        }
+
+        let matches = suggestions.filter(function(item) {
+
+            return item.toLowerCase().includes(searchText);
+
+        });
+
+        matches.slice(0, 5).forEach(function(item) {
+
+            let button = $('<button>')
+                .addClass('search-suggestion')
+                .text(item);
+
+            suggestionBox.append(button);
+
+        });
+
+        if (matches.length > 0) {
+            suggestionBox.show();
+        } else {
+            suggestionBox.hide();
+        }
+
+    }
+
+
+    // Select a suggestion
+
+    $('#searchSuggestions').on('click', '.search-suggestion', function() {
+
+        let selectedText = $(this).text();
+
+        searchInput.val(selectedText);
+
+        searchInput.trigger('keyup');
+
+        $('#searchSuggestions').hide();
+
+    });
+
+
+    // Hide suggestions when clicking outside
+
+    $(document).on('click', function(event) {
+
+        if (!$(event.target).closest('.search-container').length) {
+            $('#searchSuggestions').hide();
+        }
+
+    });
+
+
+    
+    // asik6 | Task 3: Search Highlighting
+   
+
+    let highlightElements = $(
+        '.cards-section .card h3, ' +
+        '.cards-section .card p, ' +
+        '.faq-question, ' +
+        '.faq-answer p'
+    );
+
+
+    // Save original HTML
+
+    highlightElements.each(function() {
+
+        $(this).data('original-html', $(this).html());
+
+    });
+
+
+    function highlightTextNodes(element, regex) {
+
+        let nodes = Array.from(element.childNodes);
+
+        nodes.forEach(function(node) {
+
+            if (node.nodeType === 3) {
+
+                let text = node.nodeValue;
+                let matches = text.match(regex);
+
+                if (matches) {
+
+                    let fragment = document.createDocumentFragment();
+                    let lastIndex = 0;
+
+                    regex.lastIndex = 0;
+
+                    let match;
+
+                    while ((match = regex.exec(text)) !== null) {
+
+                        fragment.appendChild(
+                            document.createTextNode(
+                                text.substring(lastIndex, match.index)
+                            )
+                        );
+
+                        let span = document.createElement('span');
+
+                        span.className = 'search-highlight';
+                        span.textContent = match[0];
+
+                        fragment.appendChild(span);
+
+                        lastIndex = regex.lastIndex;
+
+                    }
+
+                    fragment.appendChild(
+                        document.createTextNode(text.substring(lastIndex))
+                    );
+
+                    node.parentNode.replaceChild(fragment, node);
+
+                }
+
+            } else if (node.nodeType === 1) {
+
+                highlightTextNodes(node, regex);
+
+            }
+
+        });
+
+    }
+
+
+    function highlightSearch(searchText) {
+
+        // Restore original content first
+
+        highlightElements.each(function() {
+
+            $(this).html($(this).data('original-html'));
+
+        });
+
+        if (searchText === '') {
+            return;
+        }
+
+        // Escape special regex characters
+
+        let escapedText = searchText.replace(
+            /[.*+?^${}()|[\]\\]/g,
+            '\\$&'
+        );
+
+        let regex = new RegExp(escapedText, 'gi');
+
+        highlightElements.each(function() {
+
+            highlightTextNodes(this, regex);
+
+        });
+
+    }
+
+   
+    //asik6 |  Task 9: Image Lazy Loading
+   
+
+    function loadImages() {
+
+        let scrollPosition = $(window).scrollTop();
+        let windowHeight = $(window).height();
+
+        $('img[data-src]').each(function() {
+
+            let image = $(this);
+            let imagePosition = image.offset().top;
+
+            // Check if image is near the visible area
+
+            if (imagePosition < scrollPosition + windowHeight + 150) {
+
+                let imageSource = image.attr('data-src');
+
+                // Load the image
+
+                image.attr('src', imageSource);
+
+                // Remove data-src after loading
+
+                image.removeAttr('data-src');
+
+            }
+
+        });
+
+    }
+
+    // Check images when scrolling
+
+    $(window).on('scroll', function() {
+
+        loadImages();
+
+    });
+
+    // Check images when page opens
+
+    loadImages();
 });
